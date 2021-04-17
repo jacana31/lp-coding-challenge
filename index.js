@@ -4,6 +4,8 @@ const Twitts= require('./recent_search');
 
 const server = express();
 
+
+
 server.use(express.json());
 
 const  PORT = 5000;
@@ -30,8 +32,9 @@ server.get('/', (req,res) =>{
         for ( i in response.data){
             addtoDB(response.data[i]);
                                 }
+       
           selectFromDB();
-       console.log(allrecords);
+        console.log(allrecords);
             
     } catch (e) {
         console.log(e);
@@ -40,8 +43,23 @@ server.get('/', (req,res) =>{
     
 })();
 
-res.json( JSON.stringify(allrecords));
+//res.writeHead(200,{'Content-Type': 'application/json'});
+res.writeHead(200,{'Content-Type': 'text/html'});
+var fs= require("fs");
+fs.readFile('index.html', 'utf8', function (err,data) {
+    if (err) {
+      return console.log(err);
+    }else{
+    data= data.replace('twitts', JSON.stringify(allrecords));
+    res.write(data);
+    console.log(data);
+    }
+  });
 
+
+//res.write(JSON.stringify(allrecords));
+
+//res.end();
  })
 
  
@@ -53,8 +71,8 @@ server.listen(PORT, () => {
 // inset into DB
 async function addtoDB (twData){
    try {
-    console.log("************add Record to DB**********");
-    console.log(twData);
+   // console.log("************add Record to DB**********");
+    //console.log(twData);
     await twitsTB.add(twData);
    }
    catch (e){
@@ -64,11 +82,12 @@ async function addtoDB (twData){
 
 //select all
 async function selectFromDB(){
+    var records;
     try {
         
-         allrecords= await twitsTB.selectAll();
+        allrecords= await twitsTB.selectAll();
         console.log("************select Record from DB**********");
-    console.log(records);
+    console.log(allrecords);
 // iterate throught the record array
     for (i= 0; i< records.length; i++){
         console.log("record:"+i + "\n" + JSON.stringify(records[i])+'\n"')}
@@ -77,4 +96,5 @@ async function selectFromDB(){
     } catch (error) {
         console.log(e);       
     }
+    return records
 }
