@@ -26,6 +26,7 @@ server.get('/', (req,res) =>{
 
         console.log("************end of data**********");
 */
+
         for ( i in response.data){
             addtoDB(response.data[i]);
                                 }
