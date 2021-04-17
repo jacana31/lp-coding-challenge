@@ -9,7 +9,7 @@ const server = express();
 server.use(express.json());
 
 const  PORT = 5000;
-var allrecords;
+
 server.get('/', (req,res) =>{
    //res.json({message:`server is runnings on port ${PORT}`});
    
@@ -19,47 +19,33 @@ server.get('/', (req,res) =>{
         // Make request
          const response = await Twitts.getTwitts();
          
-      //  console.log("************start of data**********");
-        // parse the response array 
-        /* for ( i in response.data){
-            console.log(i);    
-        console.log( response.data[i]);
-                                }
-
-        console.log("************end of data**********");
-*/
-
+         // insert each Json record into table to update existing set
         for ( i in response.data){
+            console.log('Recieved Tweets from Tweeter: '+ JSON.stringify(response.data[i])+'\n');
             addtoDB(response.data[i]);
                                 }
-       
-          selectFromDB();
-        console.log(allrecords);
-            
+         // select all from table                        
+        const allrecords=await selectFromDB();
+        //console.log('got records'+ JSON.stringify(allrecords));
+        res.writeHead(200,{'Content-Type': 'text/html'});
+        var fs= require("fs");
+        fs.readFile('index.html', 'utf8', function (err,data) {
+                if (err) {
+                    return console.log(err);
+                        }else{
+                            // write records into the static html file 
+                        data= data.replace('twitts', JSON.stringify(allrecords));
+                            // send html to browser
+                        res.write(data);
+                        res.end();
+                            }
+                            }                     
+                            );       
     } catch (e) {
         console.log(e);
-      //  process.exit(-1);
     }
     
 })();
-
-//res.writeHead(200,{'Content-Type': 'application/json'});
-res.writeHead(200,{'Content-Type': 'text/html'});
-var fs= require("fs");
-fs.readFile('index.html', 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }else{
-    data= data.replace('twitts', JSON.stringify(allrecords));
-    res.write(data);
-    console.log(data);
-    }
-  });
-
-
-//res.write(JSON.stringify(allrecords));
-
-//res.end();
  })
 
  
@@ -80,21 +66,17 @@ async function addtoDB (twData){
    }
 }
 
-//select all
+//select all function
 async function selectFromDB(){
-    var records;
     try {
-        
-        allrecords= await twitsTB.selectAll();
-        console.log("************select Record from DB**********");
-    console.log(allrecords);
+        const records= await twitsTB.selectAll();
+        //console.log("************selected Record from DB**********");
+        //console.log(records);
 // iterate throught the record array
-    for (i= 0; i< records.length; i++){
-        console.log("record:"+i + "\n" + JSON.stringify(records[i])+'\n"')}
-
-        
-    } catch (error) {
+        //for (i= 0; i< records.length; i++){
+        //console.log("record:"+i + "\n" + JSON.stringify(records[i])+'\n"')}
+        return records ;
+        } catch (error) {
         console.log(e);       
+                        }
     }
-    return records
-}

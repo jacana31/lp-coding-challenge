@@ -10,8 +10,16 @@ module.exports={
 
 
 async function add(twits){
-    const [id]=await db("twits").insert(twits);
-    return id;
+    try {
+        const [id]=await db("twits").insert(twits);
+        return id;    
+    } catch (error) {
+        if(error.code = 19)
+        console.log('Insert record id: '+twits.id+' record already exists');          
+        else
+        console.log(error);
+    }
+    
 }
 
 async function selectAll(){
