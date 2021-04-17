@@ -1,0 +1,4 @@
+GET http://localhost:5000
+
+
+GET https://api.twitter.com/2/tweets/search/recent?query=from:twitterdev' --header 'Authorization: Bearer AAAAAAAAAAAAAAAAAAAAAIl%2FOgEAAAAA5dCjztS%2F0AEiZknAE%2FrOKnBPB6w%3DtwRR0t7AyXFRyCyxt0WS0AaYH3qWwUF6VIwUQGz6k3BzGOUy7P

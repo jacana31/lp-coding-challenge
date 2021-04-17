@@ -1,2 +1,2 @@
 # lp-coding-challenge
-LP Coding Challenge
+live person Coding Challenge
