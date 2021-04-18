@@ -34,7 +34,7 @@ server.get('/', (req,res) =>{
                     return console.log(err);
                         }else{
                             // write records into the static html file 
-                        data= data.replace('twitts', JSON.stringify(allrecords));
+                        data= data.replace('twitts-to-place-here', JSON.stringify(allrecords));
                             // send html to browser
                         res.write(data);
                         res.end();
@@ -52,6 +52,21 @@ server.get('/', (req,res) =>{
 server.listen(PORT, () => {
     console.log(`\n** Server running on port ${PORT} ***\n`);
 });
+
+server.post('/deleteDB', function (req, res) {
+    
+    (async () => {
+
+        try{
+    await deleteAll();
+    res.send('Deleted All records from table ');
+    console.log('deleted all records from table')
+        }
+        catch(e){
+            console.log(e);
+        }
+  })();
+})
 
 
 // inset into DB
@@ -79,4 +94,17 @@ async function selectFromDB(){
         } catch (error) {
         console.log(e);       
                         }
+    }
+
+    //delete all
+
+    async function deleteAll(){
+
+        try {
+        await twitsTB.deleteAll();
+        //console.log('delete all');
+        } catch (error) {
+            console.log(error);
+            
+        }
     }

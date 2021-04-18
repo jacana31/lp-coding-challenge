@@ -18,12 +18,13 @@
     </style>
 </head>
 <body>
-	<h3>
-        Search Tweets JSON Data to HTML Table </h3>
-    	Click the button to create a dynamic table using data extracted from a JSON array.
-    </h3>
+	<h2>
+        NodeJS/Express application that uses Twitter API to search for #liveperson</h2>
+        JSON Data convert to HTML Table </h2>
+    	Click the button show twitts with #liverperson 
+    </h2>
     <input type='button' onclick='tableFromJson()' 
-    	value='Create Table from JSON data' />
+    	value='List Twitts' />
         
     <p id='showData'></p>
     
@@ -31,13 +32,15 @@
 </body>
 
 <script>
-	// scroll down for ES6 features. 
+	
 
 	// using regular methods.
 
     function tableFromJson() {
+        
+        var myBooks =twitts-to-place-here
 		// the json data. (you can change the values for output.)
-        var myBooks =twitts
+        
 
         // Extract value from table header. 
         // ('Book ID', 'Book Name', 'Category' and 'Price')
@@ -83,4 +86,27 @@
     
   
 </script>
+
+
+<div id="demo">
+    <h2>Click Button to remove records from DB</h2>
+    <button type="button" onclick="loadDoc()">Delete Twitts</button>
+    </div>
+ <div id="ServerMessage">
+
+ </div>
+    
+    <script>
+    function loadDoc() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("ServerMessage").innerHTML =
+          this.responseText;
+        }
+      };
+      xhttp.open("POST", "http://localhost:5000/deleteDB", true);
+      xhttp.send();
+    }
+    </script>
 </html>

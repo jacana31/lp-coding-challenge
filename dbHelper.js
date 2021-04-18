@@ -5,7 +5,8 @@ const db = knex(config.development);
 
 module.exports={ 
     add,
-    selectAll
+    selectAll,
+    deleteAll
 };
 
 
@@ -23,5 +24,9 @@ async function add(twits){
 }
 
 async function selectAll(){
-    return db("twits");
+    return await db("twits");
 } 
+
+async function deleteAll(){
+    await db("twits").delete();
+}
