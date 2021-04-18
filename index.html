@@ -93,7 +93,7 @@
 
 
 <div id="demo">
-    <h2>Click Button to remove records from DB</h2>
+    <h2>Click Button to Remove records from DB</h2>
     <button type="button" onclick="loadDoc()">Delete Twitts</button>
     </div>
     
@@ -112,7 +112,7 @@
     </script>
 
 <div id="listTable">
-    <h2>Click Button to remove records from DB</h2>
+    <h2>Click Button to Retrieve records from DB</h2>
     <button type="button" onclick="lsRows()">retrive from Table</button>
     </div>
     
@@ -124,7 +124,7 @@
           
             tableFromJsonDynamic(JSON.parse(this.responseText)) ;
             document.getElementById("ServerMessage").innerHTML =
-          this.statusText+' Rows retrived';
+          this.statusText+' Rows retrieved';
         }
       };
       xhttp.open("GET", "http://localhost:5000/allrows", true);
