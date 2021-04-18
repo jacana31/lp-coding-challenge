@@ -35,15 +35,19 @@
 	
 
 	// using regular methods.
+    function tableFromJson(){
+        var localtwitts =twitts-to-place-here
+        tableFromJsonDynamic(localtwitts);
+    }
 
-    function tableFromJson() {
+    function tableFromJsonDynamic(jSonList) {
         
-        var myBooks =twitts-to-place-here
+        var myBooks =jSonList;
 		// the json data. (you can change the values for output.)
         
 
         // Extract value from table header. 
-        // ('Book ID', 'Book Name', 'Category' and 'Price')
+        // ('author id', 'id', 'text' )
         var col = [];
         for (var i = 0; i < myBooks.length; i++) {
             for (var key in myBooks[i]) {
@@ -92,9 +96,6 @@
     <h2>Click Button to remove records from DB</h2>
     <button type="button" onclick="loadDoc()">Delete Twitts</button>
     </div>
- <div id="ServerMessage">
-
- </div>
     
     <script>
     function loadDoc() {
@@ -109,4 +110,30 @@
       xhttp.send();
     }
     </script>
+
+<div id="listTable">
+    <h2>Click Button to remove records from DB</h2>
+    <button type="button" onclick="lsRows()">retrive from Table</button>
+    </div>
+    
+    <script>
+    function lsRows() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          
+            tableFromJsonDynamic(JSON.parse(this.responseText)) ;
+            document.getElementById("ServerMessage").innerHTML =
+          this.statusText+' Rows retrived';
+        }
+      };
+      xhttp.open("GET", "http://localhost:5000/allrows", true);
+      xhttp.send();
+    }
+    </script>
+<div id="ServerMessage">
+
+</div>
+
+
 </html>

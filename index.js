@@ -69,6 +69,23 @@ server.post('/deleteDB', function (req, res) {
 })
 
 
+server.get('/allrows', function (req, res) {
+    
+    (async () => {
+
+        try{
+           // res.writeHead(200,{'Content-Type': 'application/json'});
+            const alltwitts= await selectFromDB();
+    res.send( JSON.stringify(alltwitts));
+    console.log('sending All rows from table as JSON');
+    console.log(alltwitts);
+        }
+        catch(e){
+            console.log(e);
+        }
+  })();
+})
+
 // inset into DB
 async function addtoDB (twData){
    try {
