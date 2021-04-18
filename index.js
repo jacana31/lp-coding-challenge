@@ -9,9 +9,9 @@ const server = express();
 server.use(express.json());
 
 const  PORT = 5000;
-
+// end point to search Tweeter , store in DB and send Html page with search result 
 server.get('/', (req,res) =>{
-   //res.json({message:`server is runnings on port ${PORT}`});
+   
    
    (async () => {
 
@@ -52,7 +52,7 @@ server.get('/', (req,res) =>{
 server.listen(PORT, () => {
     console.log(`\n** Server running on port ${PORT} ***\n`);
 });
-
+// end pont to dalate rows from table
 server.post('/deleteDB', function (req, res) {
     
     (async () => {
@@ -68,7 +68,7 @@ server.post('/deleteDB', function (req, res) {
   })();
 })
 
-
+// endpoint to select all rows as json objects
 server.get('/allrows', function (req, res) {
     
     (async () => {
@@ -114,8 +114,7 @@ async function selectFromDB(){
     }
 
     //delete all
-
-    async function deleteAll(){
+async function deleteAll(){
 
         try {
         await twitsTB.deleteAll();

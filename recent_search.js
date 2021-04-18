@@ -26,7 +26,8 @@ async function getTwitts() {
     // specify a search query, and any additional fields that are required
     // by default, only the Tweet ID and text fields are returned
     const params = {
-        'query': 'liveperson -is:retweet',
+      //  'query': 'liveperson -is:retweet',
+      'query': 'liveperson',
         'tweet.fields': 'author_id'
     }
 
