@@ -17,6 +17,7 @@ server.get('/', (req,res) =>{
 
     try {
         // Make request
+        
          const response = await Twitts.getTwitts();
          
          // insert each Json record into table to update existing set
@@ -42,7 +43,10 @@ server.get('/', (req,res) =>{
                             }                     
                             );       
     } catch (e) {
-        console.log(e);
+        // send error message to client and close request
+        console.log("Error from get request: "+ e);
+        res.write("Request unsuccessful Twitter maybe unreachable ");
+        return res.end();
     }
     
 })();

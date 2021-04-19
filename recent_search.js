@@ -30,19 +30,28 @@ async function getTwitts() {
       'query': 'liveperson',
         'tweet.fields': 'author_id'
     }
-
+try {
+    
     const res = await needle('get', endpointUrl, params, {
         headers: {
             "User-Agent": "v2RecentSearchJS",
-            "authorization": `Bearer ${token}`
+            "authorization": `Bearer ${token}`,
+            "open_timeout": "5000",
+            "response_timeout" : "5000" 
         }
     })
+
 
     if (res.body) {
         return res.body;
     } else {
         throw new Error('Unsuccessful request');
     }
+        
+} catch (error) {
+    console.log(error);
+    throw new Error('Unsuccessful request');
+   }
 }
 /*
 (async () => {
